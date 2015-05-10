@@ -1,14 +1,15 @@
 // JavaScript Document
 angular.module('myApp', [])
-	.config(function($httpProvider) {
-		$httpProvider.defaults.useXDomain = true;
-	})
 	.controller('myCtrl', ['$scope', '$http', function($scope, $http) {
+		
 		$scope.searchInstagram = function(tagName) {
+			
 			if(tagName){	
+				$scope.notReset = true;
 			  	$scope.tag = tagName;
+			  	$scope.tagShow = tagName;
 
-				var url = "https://api.instagram.com/v1/tags/{tag}/media/recent";
+				var url = "https://api.instagram.com/v1/tags/"+ $scope.tag +"/media/recent";
 				var request = {
 					  COUNT:20,
 					  callback: 'JSON_CALLBACK',
@@ -16,19 +17,25 @@ angular.module('myApp', [])
 				  };
 
 				$http({
-					  method: 'GET',
+					  method: 'JSONP',
 					  url: url,
 					  params: request
 				})
-				.success(function(response) {
+				.success(function(response){
 					  $scope.results = response.data;
-					  $scope.tag = '';
+					  $scope.tagName="";	  
 				})
 				.error(function() {
 					  alert('error');
-					  $scope.tag = '';
+					  $scope.tagName="";
 			    });
 			}
+	    };
+
+	    $scope.reset = function() {
+			  	$scope.notReset = false;
+			  	$scope.tagName="";
+			  	 $scope.results="";
 	    };
 
 }]);
