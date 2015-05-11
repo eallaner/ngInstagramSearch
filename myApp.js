@@ -1,13 +1,14 @@
 // JavaScript Document
 angular.module('myApp', [])
 	.controller('myCtrl', ['$scope', '$http', function($scope, $http) {
-		
+		$scope.submitted=false;
 		$scope.searchInstagram = function(tagName) {
 			
 			if(tagName){	
 				$scope.notReset = true;
 			  	$scope.tag = tagName;
 			  	$scope.tagShow = tagName;
+			  	$scope.submitted = true;
 
 				var url = "https://api.instagram.com/v1/tags/"+ $scope.tag +"/media/recent";
 				var request = {
@@ -34,8 +35,8 @@ angular.module('myApp', [])
 
 	    $scope.reset = function() {
 			  	$scope.notReset = false;
-			  	$scope.tagName="";
-			  	 $scope.results="";
+			  	$scope.results="";
+			  	$scope.submitted=false;
 	    };
 
 }]);
