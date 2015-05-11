@@ -39,4 +39,8 @@ angular.module('myApp', [])
 			  	$scope.submitted=false;
 	    };
 
+	    $('.main form button').bind('touchstart', function(event){
+                event.stopPropagation(); 
+        });
+
 }]);
